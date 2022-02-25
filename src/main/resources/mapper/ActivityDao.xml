@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.crm.workbench.dao.ActivityDao">
+    <select id="selectAllUsers" resultType="com.example.crm.settings.domain.User">
+        select *
+        from tbl_user
+    </select>
+    <insert id="addActivity">
+        insert into tbl_activity
+            (id, owner, name, startDate, endDate, cost, description, createTime, createBy)
+        VALUES
+               (#{id},#{owner},#{name},#{startDate},#{endDate},#{cost},#{description},#{createTime},#{createBy})
+    </insert>
+    <select id="sum" resultType="int">
+        select count(*) from tbl_activity a join tbl_user b on a.owner=b.id
+    <where>
+        <if test="name!=null and name!=''">
+            a.name like concat('%',#{name},'%')
+        </if>
+        <if test="owner!=null and owner!=''">
+           and b.name like concat('%',#{owner},'%')
+        </if>
+        <if test="startDate!=null and startDate!=''">
+           and a.startDate &gt;= #{startDate}
+        </if>
+        <if test="endDate!=null and endDate!=''">
+           and a.endDate &lt;= #{endDate}
+        </if>
+    </where>
+    </select>
+    <select id="conditionalSearch" resultType="com.example.crm.workbench.domain.Activity">
+        select
+            a.id,
+            a.name,
+            b.name as owner,
+            a.startDate,
+            a.endDate
+        from tbl_activity a join tbl_user b on a.owner=b.id
+        <where>
+            <if test="name!=null and name!=''">
+                a.name like concat('%',#{name},'%')
+            </if>
+            <if test="owner!=null and owner!=''">
+                and b.name like concat('%',#{owner},'%')
+            </if>
+            <if test="startDate!=null and startDate!=''">
+                and a.startDate &gt;= #{startDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                and a.endDate &lt;= #{endDate}
+            </if>
+        </where>
+            ORDER BY startDate DESC
+            LIMIT #{pageNum},#{pagesize}
+    </select>
+    <select id="detail" resultType="com.example.crm.workbench.domain.Activity">
+        SELECT
+            a.id,
+            b.name as owner,
+            a.name,
+            a.startDate,
+            a.endDate,
+            a.cost,
+            a.description,
+            a.createTime,
+            a.createBy,
+            a.editTime,
+            a.editBy
+        FROM
+            tbl_activity a JOIN tbl_user b on a.`owner`=b.id
+        where
+            a.id=#{id}
+    </select>
+</mapper>
