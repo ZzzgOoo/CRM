@@ -22,5 +22,10 @@ public interface ActivityDao {
     int  sum(String name,String owner,String startDate,String endDate);
     //conditional search:条件查找
     List<Activity> conditionalSearch(int pagesize,int pageNum,String name,String owner,String startDate,String endDate);
+    //根据id查询详细信息
     Activity detail(String id);
+    //根据id查询详细信息 有过修改的情况
+    Activity detail2(String id);
+    //更新activity信息
+    int updateActivity(String id,String userid, String name, String startDate, String endDate, String cost, String description, String editTime, String editBy);
 }

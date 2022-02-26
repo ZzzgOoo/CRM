@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class ActivityController {
@@ -43,10 +44,10 @@ public class ActivityController {
     @RequestMapping("/addActivity")
     @ResponseBody
     public int addActivity(HttpServletRequest request,String owner,String name,String startDate,String endDate,String cost,String description){
-        User user1= (User) request.getSession().getAttribute("user");
+        User user= (User) request.getSession().getAttribute("user");
 
          return activityService.addActivity(UUIDUtil.getUUID(),owner,name,startDate,endDate,cost,description,
-                DateTimeUtil.getSysTime(),user1.getName());
+                DateTimeUtil.getSysTime(),user.getName());
     }
 
 
@@ -82,16 +83,14 @@ public class ActivityController {
     @RequestMapping("/detail")
     @ResponseBody
     public Activity detail(String id){
-
-        return activityService.detail(id);
-
+            return activityService.detail(id);
     }
 
     //更新Activity
     @RequestMapping("/updateActivity")
     @ResponseBody
-    public int updateActivity(String id,String name,String startDate,String endDate,String cost,String description){
-
-        return 1;
+    public int updateActivity(String id,String userid,String name,String startDate,String endDate,String cost,String description,HttpServletRequest request){
+        User user= (User) request.getSession().getAttribute("user");
+        return activityService.updateActivity(id,userid,name,startDate,endDate,cost,description,DateTimeUtil.getSysTime(),user.getId());
     }
 }

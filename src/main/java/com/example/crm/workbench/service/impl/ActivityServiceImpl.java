@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ActivityServiceImpl implements ActivityService {
@@ -44,6 +45,15 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public Activity detail(String id) {
-        return activityDao.detail(id);
+        Activity activity=activityDao.detail(id);
+        if (activity.getEditBy()!=null ){
+          return   activityDao.detail2(id);
+        }
+        return activity;
+    }
+
+    @Override
+    public int updateActivity(String id,String userid, String name, String startDate, String endDate, String cost, String description, String editTime, String editBy) {
+        return activityDao.updateActivity(id,userid, name, startDate, endDate, cost, description, editTime, editBy);
     }
 }

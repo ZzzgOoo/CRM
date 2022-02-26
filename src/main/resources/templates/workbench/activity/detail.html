@@ -24,7 +24,8 @@
 				$.ajax({
 					url:"/updateActivity",
 					data: {
-						id:$("#edit-marketActivityOwner option:selected").val(),
+						id:id,
+						userid:$("#edit-marketActivityOwner option:selected").val(),
 						name:$("#edit-marketActivityName").val().trim(),
 						startDate:$("#edit-startTime").val().trim(),
 						endDate:$("#edit-endTime").val().trim(),
@@ -32,7 +33,13 @@
 						description:$("#edit-describe").val().trim()
 					},
 					success:function (data){
-
+							if (data==1){
+								alert("更新成功");
+								detail(id);
+								users();
+							}else {
+								alert("保存失败")
+							}
 					}
 				})
 
@@ -80,6 +87,7 @@
 				id:id,
 			},
 			success:function (data){
+				$("#activityName").html("");
 				$("#activityName").append("<h3>市场活动-"+data.name+"<small>"+data.startDate+" ~ "+data.endDate+"</small></h3>");
 				$("#owner").text(data.owner);
 				$("#name").text(data.name);
@@ -106,6 +114,7 @@
 			url:"/addBtnActivityModel",
 			success:function (data){
 				$.each(data,function (i,n){
+					$("#edit-marketActivityOwner").html("");
 					$("#edit-marketActivityOwner").append("<option value='"+n.id+"'>"+n.name+"</optiop>")
 			})
 		}

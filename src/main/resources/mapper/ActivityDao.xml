@@ -69,8 +69,41 @@
             a.editTime,
             a.editBy
         FROM
-            tbl_activity a JOIN tbl_user b on a.`owner`=b.id
+            tbl_activity a
+                JOIN tbl_user b on a.`owner`=b.id
+
         where
             a.id=#{id}
     </select>
+    <select id="detail2" resultType="com.example.crm.workbench.domain.Activity">
+        SELECT
+            a.id,
+            b.name as owner,
+            a.name,
+            a.startDate,
+            a.endDate,
+            a.cost,
+            a.description,
+            a.createTime,
+            a.createBy,
+            a.editTime,
+            c.name as editBy
+        FROM
+            tbl_activity a
+                JOIN tbl_user b on a.`owner`=b.id
+                JOIN tbl_user c on a.editBy=c.id
+        where
+            a.id=#{id}
+    </select>
+    <update id="updateActivity">
+        update tbl_activity set name=#{name},
+                                owner=#{userid},
+                                startDate=#{startDate},
+                                endDate=#{endDate},
+                                cost=#{cost},
+                                description=#{description},
+                                editTime=#{editTime},
+                                editBy=#{editBy}
+                    where id=#{id}
+    </update>
 </mapper>
