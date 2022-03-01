@@ -44,6 +44,24 @@
 				})
 
 		})
+		//删除功能实现
+		$("#deleteBtn").click(function (){
+			if (confirm("确定要删除吗？该操作将不可逆")){
+				$.ajax({
+					url:"/deleteActivity",
+					data:{
+						activityId:id
+					},
+					success:function (data){
+						if (data===1){
+							alert("你已成功删除")
+							window.location.replace("/activity/index.html")
+						}
+					}
+				})
+			}
+		})
+
 
 		$("#remark").focus(function(){
 			if(cancelAndSaveBtnDefault){
@@ -79,7 +97,7 @@
 			$(this).children("span").css("color","#E6E6E6");
 		});
 	});
-
+	//页面数据的加载
 	function detail(id) {
 		$.ajax({
 			url:"/detail",
@@ -231,7 +249,7 @@
 		</div>
 		<div style="position: relative; height: 50px; width: 250px;  top: -72px; left: 700px;">
 			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#editActivityModal" id="updateBtn"><span class="glyphicon glyphicon-edit"></span> 编辑</button>
-			<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+			<button type="button" class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 		</div>
 	</div>
 	
