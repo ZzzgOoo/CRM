@@ -21,6 +21,8 @@ public interface ActivityService {
     PaginationOv<Activity> selectRecord(String pageNumber,String pageSize,String name, String owner, String startDate, String endDate);
     //detail页面详细信息
     Activity detail(String id);
-
+    //详细信息查询
     int updateActivity(String id,String userid, String name, String startDate, String endDate, String cost, String description, String editTime, String editBy);
+    //删除
+    int delete(String[] id);
 }

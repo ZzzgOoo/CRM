@@ -56,4 +56,9 @@ public class ActivityServiceImpl implements ActivityService {
     public int updateActivity(String id,String userid, String name, String startDate, String endDate, String cost, String description, String editTime, String editBy) {
         return activityDao.updateActivity(id,userid, name, startDate, endDate, cost, description, editTime, editBy);
     }
+
+    @Override
+    public int delete(String[] id) {
+        return activityDao.delete(id);
+    }
 }

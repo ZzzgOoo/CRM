@@ -70,12 +70,10 @@ public class ActivityController {
     //删除
     @RequestMapping("/deleteActivity")
     @ResponseBody
-    public String deleteActivity(String activityId){
+    public int deleteActivity(String activityId){
         String[] attr=activityId.split(",");
-        for (int a=0;a<attr.length;a++){
-            System.out.println(attr[a]);
-        }
-        return "1";
+
+        return activityService.delete(attr);
     }
 
 
